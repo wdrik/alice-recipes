@@ -8,7 +8,6 @@
 const theme = {
   colors: {
     primary: '#eb717e',
-    blue: '#3483fA',
 
     dark: '#333333',
     gray: '#999999',
