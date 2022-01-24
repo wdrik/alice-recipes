@@ -24,6 +24,8 @@ export default function Home({ recipes }: RecipesProps) {
       <Header />
 
       <main>
+        <h2>Receitas da Alice! </h2>
+
         {recipes.map((recipe) => (
           <div key={recipe.slug}>
             <Image
@@ -36,6 +38,8 @@ export default function Home({ recipes }: RecipesProps) {
             <time>{recipe.updatedAt}</time>
             <h2>{recipe.title}</h2>
             <p>{recipe.excerpt}</p>
+
+            <hr />
           </div>
         ))}
       </main>
