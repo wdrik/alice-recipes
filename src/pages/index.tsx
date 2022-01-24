@@ -1,10 +1,12 @@
 import { GetStaticProps } from 'next';
-import Header from '../components/Header';
-import { getPrismicClient } from '../services/prismic';
+import Link from 'next/link';
+import Image from 'next/image';
 
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
-import Image from 'next/image';
+
+import Header from '../components/Header';
+import { getPrismicClient } from '../services/prismic';
 
 type Recipes = {
   slug: string;
@@ -28,16 +30,20 @@ export default function Home({ recipes }: RecipesProps) {
 
         {recipes.map((recipe) => (
           <div key={recipe.slug}>
-            <Image
-              src={recipe.image_url}
-              alt={recipe.title}
-              width={100}
-              height={100}
-            />
+            <Link href={`/receitas/${recipe.slug}`}>
+              <a>
+                <Image
+                  src={recipe.image_url}
+                  alt={recipe.title}
+                  width={100}
+                  height={100}
+                />
 
-            <time>{recipe.updatedAt}</time>
-            <h2>{recipe.title}</h2>
-            <p>{recipe.excerpt}</p>
+                <time>{recipe.updatedAt}</time>
+                <h2>{recipe.title}</h2>
+                <p>{recipe.excerpt}</p>
+              </a>
+            </Link>
 
             <hr />
           </div>
@@ -58,11 +64,12 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   );
 
-  console.log(JSON.stringify(response, null, 2));
+  // console.log(JSON.stringify(response, null, 2));
 
   const recipes = response.results.map((recipe) => {
     return {
       slug: recipe.uid,
+      image_url: recipe.data.recipe_image.url,
       title: RichText.asText(recipe.data.title),
       excerpt:
         recipe.data.content.find((content: any) => content.type === 'paragraph')
@@ -74,7 +81,6 @@ export const getStaticProps: GetStaticProps = async () => {
         month: 'long',
         year: 'numeric',
       }),
-      image_url: recipe.data.recipe_image.url,
     };
   });
 
