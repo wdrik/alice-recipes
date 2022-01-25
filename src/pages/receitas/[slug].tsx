@@ -43,8 +43,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const { slug } = query;
 
-  console.log(slug);
-
   const prismic = getPrismicClient(req);
 
   const response = await prismic.getByUID<any>('recipe', String(slug), {});
