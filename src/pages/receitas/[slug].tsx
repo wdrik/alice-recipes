@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
 import { RichText } from 'prismic-dom';
 import Header from '../../components/Header';
@@ -17,9 +18,13 @@ interface RecipesProps {
 export default function Recipe({ recipe }: RecipesProps) {
   return (
     <>
-      <Header />
+      <Head>
+        <title>{recipe.title}</title>
+      </Head>
 
       <main>
+        <Header />
+
         <article>
           <h1>{recipe.title}</h1>
 
